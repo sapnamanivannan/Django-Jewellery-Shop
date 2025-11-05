@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+{{product.title.capitalize}}
+{% endblock %}
+
+{% block content %}
+<div class="row ">
+
+    <div class="col-12 col-md-6">
+        {% include 'products/includes/productCarousel.html' %}
+    </div>
+    <div class="col-6">
+        <div class="prod-details">
+            <div class="row">
+                <h2 class="col">
+                {{product.name}}
+            </h2>
+            </div>
+            <p>
+                Rs. {{product.price}}
+            </p>
+        </div>
+
+        <section class="product-management">
+            <div class="row p-4">
+                <a href="{% url 'edit_product' product.id %}" class=" col btn btn-warning">Edit Product</a>
+                <a href="{% url 'del_product' product.id %}" class=" col btn btn-danger">Remove Product</a>
+            </div>
+
+    
+        </div>
+            <div class="row p-4">
+                <h4>Add Picture</h4>
+                <form method="post" enctype="multipart/form-data" class="form">
+                    {% csrf_token %}
+
+                    <div class="card">
+                        {{form.as_p}}
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Add Picture</button>
+                </form>
+
+            </div>
+
+        </section>
+
+
+
+    </div>
+</div>
+
+{% endblock %}

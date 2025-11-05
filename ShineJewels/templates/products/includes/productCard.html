@@ -1,0 +1,12 @@
+<div class="card col-12 col-sm-6 col-md-4 p-0 ">
+    <a href="{% url 'prod_detail' product.id %}">
+        <img src="{{product.thumbnail.url}}" class="card-img-top" alt="{{product.title}}-image">
+    </a>
+    <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text">
+                Rs.{{product.price}}
+            </p>
+        <a href="{% url 'prod_detail' product.id %}" class="btn btn-primary">Add to Cart</a>
+    </div>
+</div>
