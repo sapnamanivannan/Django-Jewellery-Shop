@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Search : {{query}}
+{% endblock %}
+
+
+{% block content %}
+<section>
+    <h1>
+        Search results for : <small>{{query.capitalize}}</small>
+    </h1>
+</section>
+<section>
+    <div class="container-fluid products row">
+        {% for product in products %}
+        {% include 'products/includes/productCard.html' %}
+        {% empty %}
+        <div>
+            No products matching your query!!!
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

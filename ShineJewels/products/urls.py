@@ -3,6 +3,10 @@ from django.urls import path
 from .views import (ViewProducts, AddProduct,ProductDetail,EditProduct,RemoveProduct)
 
 from.views import EditProductImage,DelProductImage
+
+from .views import searchView
+
+
 urlpatterns = [
     path('', ViewProducts.as_view(), name= 'view_products'),
     path('add/', AddProduct.as_view(), name = 'add_product'),
@@ -11,6 +15,8 @@ urlpatterns = [
     path('del/<int:pk>/',RemoveProduct.as_view(), name='del_product'),
 
 
-    path('iamge/edit/<int:pk>/', EditProductImage.as_view(), name='edit_product_image'),
-    path('image/del/<int:pk>/',DelProductImage.as_view(), name='del_product_image')
+    path('image/edit/<int:pk>/', EditProductImage.as_view(), name='edit_product_image'),
+    path('image/del/<int:pk>/',DelProductImage.as_view(), name='del_product_image'),
+
+    path('search/', searchView, name = 'search_products')
 ]

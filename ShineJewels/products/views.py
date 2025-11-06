@@ -78,3 +78,17 @@ class DelProductImage(DeleteView):
         product_pk = self.object.product.pk
         return reverse_lazy('prod_detail', kwargs={'pk': product_pk})
     
+
+def searchView(request):
+    query = request.GET.get('q')
+    result_products = Product.objects.filter(name__icontains = query)
+    context = {
+        'query' : query,
+        'products' : result_products,
+        'search_bar' : True
+    }
+    template = 'products/search_results.html'
+
+    return render(request, template, context)
+
+

@@ -9,7 +9,8 @@ def homeView(request):
     context = {
         # dictionary with context data.
         'carousel_images' : CarouselImage.objects.all(),
-        'products' : Product.objects.all()
+        'products' : Product.objects.all(),
+        'search_bar' : True
         #The above line is equivalent to 'SELECT * FROM CarouselImage;
     }
     return render(request, template_name,context)
