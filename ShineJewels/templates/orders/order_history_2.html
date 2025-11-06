@@ -1,0 +1,115 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+Order History
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold" style="color:#efc8ff;">Order History</h2>
+        <p class="text-muted">View your past and pending orders</p>
+    </div>
+
+    {% if orders %}
+        {% for order in orders %}
+        <div class="card border-0 shadow-sm mb-4" style="background-color:#f5e8ff;">
+            <!-- Card Header -->
+            <div class="card-header d-flex justify-content-between align-items-center"
+                 style="background-color:#ffa2c6; color:white;">
+                <div>
+                    <i class="bi bi-receipt"></i> <strong>Order ID:</strong> #{{ order.id }}
+                </div>
+                <div>
+                    <i class="bi bi-calendar3"></i> {{ order.order_date|date:"d M Y, H:i" }}
+                </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body bg-white rounded-bottom">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Status:</strong> 
+                            <span class="badge 
+                                {% if order.status == 'PENDING' %} bg-warning text-dark 
+                                {% elif order.status == 'COMPLETED' %} bg-success 
+                                {% else %} bg-secondary 
+                                {% endif %}">
+                                {{ order.status }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-1"><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+                    </div>
+                </div>
+                <hr>
+
+                <!-- Ordered Items -->
+                <div class="ordered-items">
+                    {% for item in order.order_details.all %}
+                    <div class="d-flex align-items-center p-2 mb-3 rounded" 
+                         style="background-color:#fdf9ff; border-left:4px solid #fdbaff;">
+                        <div class="thumbnail me-3">
+                            <img src="{{ item.order_item.thumbnail.url }}" alt="{{ item.order_item.name }}"
+                                 class="img-thumbnail border-0 shadow-sm"
+                                 style="width: 90px; height: 90px; object-fit: cover;">
+                        </div>
+                        <div class="item-details flex-grow-1">
+                            <a href="{% url 'prod_detail' item.order_item.id %}" 
+                               class="text-decoration-none fw-semibold"
+                               style="color:#4b0082;">
+                                {{ item.order_item.name }}
+                            </a>
+                            <p class="mb-1 text-muted small">Quantity: {{ item.quantity }}</p>
+                            <p class="mb-1 text-muted small">Price: ₹{{ item.price|floatformat:2 }}</p>
+                            <p class="fw-bold" style="color:#800000;">Subtotal: ₹{{ item.price|floatformat:2 }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="card-footer d-flex justify-content-between align-items-center"
+                 style="background-color:#f3e5ff;">
+                <div class="d-flex gap-2">
+                    {% if order.status == 'PENDING' %}
+                    <a href="{% url 'payment:create_razorpay_order' order.id %}" 
+                       class="btn btn-sm text-white" style="background-color:#800000;">
+                        <i class="bi bi-cash-stack"></i> Pay Now
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'order_detail' order.id %}" 
+                       class="btn btn-sm" 
+                       style="background-color:#c77dff; color:white;">
+                        <i class="bi bi-eye"></i> View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Shop More Button -->
+        <div class="text-center mt-5">
+            <a href="{% url 'home_page' %}" 
+               class="btn  shadow-sm bg-dark" 
+               >
+                <i class="bi bi-shop"></i> Shop More
+            </a>
+        </div>
+
+    {% else %}
+    <!-- Empty Orders Message -->
+    <div class="alert text-center shadow-sm" style="background-color:#f5e8ff; color:#800000;">
+        <h5 class="mb-2">No Orders Found</h5>
+        <p class="mb-0">
+            You haven’t placed any orders yet.
+            <a href="{% url 'home_page' %}" class="fw-bold" style="color:#4b0082;">Start Shopping</a>
+        </p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

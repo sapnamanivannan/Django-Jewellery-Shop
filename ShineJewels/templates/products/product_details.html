@@ -1,54 +1,98 @@
 {% extends 'base/base.html' %}
 
 {% block title %}
-{{product.title.capitalize}}
+{{ product.name|capfirst }}
 {% endblock %}
 
 {% block content %}
-<div class="row ">
+<div class="container py-5">
+    <div class="row g-4 align-items-start">
 
-    <div class="col-12 col-md-6">
-        {% include 'products/includes/productCarousel.html' %}
-    </div>
-    <div class="col-6">
-        <div class="prod-details">
-            <div class="row">
-                <h2 class="col">
-                {{product.name}}
-            </h2>
+        <!-- Left: Product Carousel -->
+        <div class="col-12 col-md-6">
+            <div class="card border-0 shadow-sm" style="background-color:#f7eaff;">
+                {% include 'products/includes/productCarousel.html' %}
             </div>
-            <p>
-                Rs. {{product.price}}
-            </p>
         </div>
 
-        <section class="product-management">
-            <div class="row p-4">
-                <a href="{% url 'edit_product' product.id %}" class=" col btn btn-warning">Edit Product</a>
-                <a href="{% url 'del_product' product.id %}" class=" col btn btn-danger">Remove Product</a>
+        <!-- Right: Product Details -->
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm border-0 p-4" style="background-color:#ffffff; border-left:6px solid #ff69b4;">
+                <h2 class="fw-bold" style="color:#d63384;">{{ product.name }}</h2>
+                <h5 class="text-muted mb-3">{{ product.metal_type|capfirst }}</h5>
+                <hr style="border-color:#f7eaff;">
+                <p><strong>Description:</strong> {{ product.description }}</p>
+                <p><strong>Price:</strong> ₹ {{ product.price }}</p>
+                <p><strong>Weight:</strong> {{ product.gram_weight }} g</p>
+                <p><strong>Karat:</strong> {{ product.karat }}K</p>
+                <p class="text-secondary"><small>Added on: {{ product.added_at|date:"M d, Y" }}</small></p>
+
+                <!-- Add to Cart (hidden for staff) -->
+                {% if not user.is_staff %}
+                <div class="mt-4">
+                    <a href="{% url 'add_to_cart' product.id %}" 
+                       class="btn text-white px-4 shadow-sm"
+                       style="background-color:#ff69b4;">
+                        <i class="bi bi-cart-heart"></i> Add to Cart
+                    </a>
+                </div>
+                {% endif %}
             </div>
 
-    
-        </div>
-            <div class="row p-4">
-                <h4>Add Picture</h4>
-                <form method="post" enctype="multipart/form-data" class="form">
-                    {% csrf_token %}
+            <!-- Product Management Accordion (Visible to Staff Only) -->
+            {% if user.is_staff %}
+            <div class="accordion mt-4" id="managementAccordion">
+                <div class="accordion-item border-0 shadow-sm">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button fw-bold text-white"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne"
+                                aria-expanded="false"
+                                aria-controls="collapseOne"
+                                style="background-color:#d63384;">
+                             Product Management
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse"
+                         aria-labelledby="headingOne"
+                         data-bs-parent="#managementAccordion">
+                        <div class="accordion-body" style="background-color:#f7eaff;">
+                            
+                            <!-- Edit/Delete Buttons -->
+                            <div class="d-flex gap-2 mb-4">
+                                <a href="{% url 'edit_product' product.id %}" 
+                                   class="btn flex-fill text-white shadow-sm"
+                                   style="background-color:#ff69b4;">
+                                    <i class="bi bi-pencil-square"></i> Edit Product
+                                </a>
+                                <a href="{% url 'del_product' product.id %}" 
+                                   class="btn flex-fill text-white shadow-sm"
+                                   style="background-color:#d63384;">
+                                    <i class="bi bi-trash"></i> Remove Product
+                                </a>
+                            </div>
 
-                    <div class="card">
-                        {{form.as_p}}
+                            <!-- Add Picture Section -->
+                            <h5 class="fw-bold mb-3" style="color:#d63384;">Add Picture</h5>
+                            <form method="post" enctype="multipart/form-data" 
+                                  class="p-3 rounded shadow-sm" style="background-color:#ffffff;">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ form.as_p }}
+                                </div>
+                                <button type="submit" 
+                                        class="btn text-white px-3" 
+                                        style="background-color:#ff69b4;">
+                                    <i class="bi bi-plus-circle"></i> Add Picture
+                                </button>
+                            </form>
+                        </div>
                     </div>
-
-                    <button type="submit" class="btn btn-success">Add Picture</button>
-                </form>
-
+                </div>
             </div>
-
-        </section>
-
-
-
+            {% endif %}
+        </div>
     </div>
 </div>
-
 {% endblock %}

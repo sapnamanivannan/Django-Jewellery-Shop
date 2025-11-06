@@ -11,5 +11,13 @@ Home
 
 </section>
 
+<section class="mt-4">
+    <div class="container-fluid products row mx-auto">
+        {% for product in products %}
+        {% include 'products/includes/productCard.html' %}
+        {% endfor %}
+    </div>
+</section>
+
 
 {% endblock %}

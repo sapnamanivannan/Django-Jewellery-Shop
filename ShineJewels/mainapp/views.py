@@ -1,13 +1,15 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .models import CarouselImage
+from products.models import Product
 
 # Create your views here.
 def homeView(request):
     template_name = 'mainapp/home.html'
     context = {
         # dictionary with context data.
-        'carousel_images' : CarouselImage.objects.all()
+        'carousel_images' : CarouselImage.objects.all(),
+        'products' : Product.objects.all()
         #The above line is equivalent to 'SELECT * FROM CarouselImage;
     }
     return render(request, template_name,context)

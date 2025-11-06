@@ -6,6 +6,364 @@ About
 
 {% block content %}
 
-This is the about page
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — ShineJewels</title>
+  <meta name="description" content="ShineJewels — handcrafted fine jewellery made with love. Learn our story, mission, and meet our team." />
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent:#b88f67; /* warm gold */
+      --muted:#6b6b6b;
+      --bg:#fffaf8;
+      --card:#ffffff;
+      --radius:16px;
+      --max-width:1100px;
+      --gap:24px;
+      font-family: "Rubik", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #222;
+      line-height:1.55;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: linear-gradient(180deg, #fffdfb 0%, #f7f3f1 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .container{
+      max-width:var(--max-width);
+      margin:40px auto;
+      padding:0 20px;
+    }
+
+    /* Hero */
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:var(--gap);
+      align-items:center;
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2)), url('https://source.unsplash.com/1600x900/?jewelry,ring');
+      background-size:cover;
+      background-position:center;
+      border-radius:20px;
+      padding:48px;
+      color:#111;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .hero-inner{
+      backdrop-filter: blur(2px);
+      max-width:900px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:12px;
+    }
+    .logo{
+      width:64px;
+      height:64px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent), #ffd7a6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 6px 18px rgba(184,143,103,0.18);
+      font-weight:700;
+      color:white;
+      font-size:22px;
+    }
+
+    h1{
+      margin:0 0 8px 0;
+      font-size:28px;
+      letter-spacing: -0.3px;
+    }
+
+    .tagline{
+      margin:0 0 18px 0;
+      color:var(--muted);
+      font-weight:500;
+    }
+
+    .hero p{margin:0 0 18px 0; max-width:62ch;}
+
+    .cta-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      background:var(--accent);
+      color:white;
+      border:0;
+      padding:12px 18px;
+      border-radius:12px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(184,143,103,0.18);
+    }
+    .btn.secondary{
+      background:transparent;
+      border:1px solid rgba(0,0,0,0.08);
+      color:#111;
+      box-shadow:none;
+    }
+
+    /* Sections */
+    section{
+      margin-top:28px;
+      background:transparent;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:var(--gap);
+      margin-top:18px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow: 0 6px 22px rgba(15,15,15,0.04);
+      min-height:120px;
+    }
+
+    .card h3{margin-top:0; margin-bottom:10px; font-size:18px}
+    .muted{color:var(--muted); font-size:15px}
+
+    /* Team */
+    .team-grid{
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:var(--gap);
+      margin-top:16px;
+    }
+    .person{
+      background:linear-gradient(180deg,#fff,#fff);
+      border-radius:14px;
+      padding:14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .avatar{
+      width:64px;
+      height:64px;
+      border-radius:12px;
+      overflow:hidden;
+      flex:0 0 64px;
+      background:#eee;
+      display:grid;
+      place-items:center;
+      font-weight:600;
+      color:var(--muted);
+    }
+    .person h4{margin:0; font-size:16px}
+    .role{color:var(--muted); font-size:14px}
+
+    /* Testimonials */
+    .testimonials{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      margin-top:16px;
+    }
+    .testimonial{
+      background:linear-gradient(180deg,#ffffff,#fffaf7);
+      padding:16px;
+      border-radius:14px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.03);
+    }
+    .quote{font-style:italic; margin:0 0 8px 0}
+
+    /* CTA footer */
+    .cta-footer{
+      margin-top:28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:18px;
+      border-radius:14px;
+      background: linear-gradient(90deg, rgba(184,143,103,0.08), rgba(184,143,103,0.03));
+    }
+
+    footer{
+      margin-top:28px;
+      padding:24px 0;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    /* Responsive */
+    @media (max-width:900px){
+      .cards{grid-template-columns:1fr;}
+      .team-grid{grid-template-columns:1fr 1fr;}
+      .testimonials{grid-template-columns:1fr;}
+      .hero{padding:28px}
+    }
+    @media (max-width:520px){
+      .team-grid{grid-template-columns:1fr;}
+      .hero{padding:20px}
+      h1{font-size:22px}
+    }
+
+    /* small utilities */
+    .small{font-size:13px; color:var(--muted)}
+    .center{display:flex;align-items:center;gap:8px}
+  </style>
+</head>
+<body>
+  <main class="container" role="main">
+    <!-- HERO -->
+    <header class="hero" aria-label="About ShineJewels">
+      <div class="hero-inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">SJ</div>
+          <div>
+            <div class="small">ShineJewels</div>
+            <div class="small muted">Handcrafted • Ethical • Timeless</div>
+          </div>
+        </div>
+
+        <h1>Stories in gold — handcrafted jewellery, made to last</h1>
+        <p class="tagline">At ShineJewels we blend traditional craftsmanship with contemporary design. Each piece is designed to become a part of your story — heirlooms for the everyday.</p>
+
+        <p>Founded in 2012, our studio sources responsibly mined metals and ethically certified stones. We create engagement rings, everyday necklaces, and custom pieces that celebrate life’s moments.</p>
+
+        <div class="cta-row" role="group" aria-label="actions">
+          <button class="btn" onclick="location.href='#contact'">Book a consultation</button>
+          <!-- <button class="btn secondary" onclick="location.href='#collection'">View collection</button> -->
+        </div>
+      </div>
+    </header>
+
+    <!-- Quick facts / mission -->
+    <section aria-labelledby="why">
+      <h2 id="why" style="font-size:20px; margin:14px 0 0 0">Why ShineJewels?</h2>
+      <div class="cards" role="list">
+        <article class="card" role="listitem" aria-label="Craftsmanship">
+          <h3>Master craftsmanship</h3>
+          <p class="muted">Every piece is hand-finished by experienced artisans — attention to detail is our promise.</p>
+        </article>
+
+        <article class="card" role="listitem" aria-label="Ethical sourcing">
+          <h3>Ethical sourcing</h3>
+          <p class="muted">We use responsibly sourced metals and certified gemstones; transparency matters to us.</p>
+        </article>
+
+        <article class="card" role="listitem" aria-label="Lifetime care">
+          <h3>Lifetime care</h3>
+          <p class="muted">Free cleaning & inspection for life — because jewellery should be worn, not stored away.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Our story -->
+    <section aria-labelledby="story">
+      <h2 id="story" style="font-size:20px; margin-top:22px">Our story</h2>
+      <p class="muted">What began as a small family workshop has grown into a studio known for subtle, elegant designs. We combine classic techniques with modern silhouettes to create pieces that are comfortable to wear daily and beautiful enough for special occasions.</p>
+    </section>
+
+    <!-- Team -->
+    <section aria-labelledby="team">
+      <h2 id="team" style="font-size:20px; margin-top:22px">Meet the team</h2>
+
+      <div class="team-grid" role="list">
+        <div class="person" role="listitem">
+          <div class="avatar" aria-hidden="true">SM</div>
+          <div>
+            <h4>Sapna Manivannan</h4>
+            <div class="role">Founder & Head Designer</div>
+            <div class="small muted">Designs inspired by architecture and nature.</div>
+          </div>
+        </div>
+
+        <div class="person" role="listitem">
+          <div class="avatar" aria-hidden="true">MD</div>
+          <div>
+            <h4>Maha Dinesh</h4>
+            <div class="role">Lead Goldsmith</div>
+            <div class="small muted">15+ years crafting bespoke pieces.</div>
+          </div>
+        </div>
+
+        <div class="person" role="listitem">
+          <div class="avatar" aria-hidden="true">KK</div>
+          <div>
+            <h4>Keerthika Krishna</h4>
+            <div class="role">Customer Experience</div>
+            <div class="small muted">Helps clients bring ideas to life.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section aria-labelledby="testi">
+      <h2 id="testi" style="font-size:20px; margin-top:22px">What customers say</h2>
+
+      <div class="testimonials" role="list">
+        <figure class="testimonial" role="listitem">
+          <blockquote class="quote">"My engagement ring is perfect — delicate, timeless and exactly what I asked for."</blockquote>
+          <figcaption class="small muted">— Priya, Bangalore</figcaption>
+        </figure>
+
+        <figure class="testimonial" role="listitem">
+          <blockquote class="quote">"Amazing service. They redesigned my grandmother's locket and made it wearable every day."</blockquote>
+          <figcaption class="small muted">— Anjali, Mumbai</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- CTA footer -->
+    <div class="cta-footer" id="contact" aria-label="Contact and booking">
+      <div>
+        <strong>Book a private consultation</strong>
+        <div class="small muted">In-studio or online — appointments available 6 days a week.</div>
+      </div>
+      <div class="center">
+        <div style="text-align:right">
+          <div style="font-weight:600">Call / WhatsApp</div>
+          <div class="small muted">+91 98765 43210</div>
+        </div>
+        <button class="btn" onclick="alert('Thanks — we will contact you shortly!')">Request appointment</button>
+      </div>
+    </div>
+
+    <footer>
+      <div>
+        <strong>ShineJewels</strong><br>
+        <span class="small muted">Fine jewellery • Bespoke • Repairs</span>
+      </div>
+
+      <nav aria-label="footer">
+        <a href="#" class="small muted" style="margin-right:12px; text-decoration:none">Collections</a>
+        <a href="#" class="small muted" style="margin-right:12px; text-decoration:none">Custom design</a>
+        <a href="#" class="small muted" style="text-decoration:none">Privacy</a>
+      </nav>
+    </footer>
+  </main>
+</body>
+</html>
+
 
 {% endblock %}
